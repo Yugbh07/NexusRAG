@@ -1,0 +1,31 @@
+# Git and local configs
+.git
+.gitignore
+.env
+.env.local
+
+# Python caches and virtual environments
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local tests, benchmarks, and docs (not needed inside runtime container)
+tests/
+research/
+docs/
+presentation/
+logs/*.log
+
+# IDE & OS metadata
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

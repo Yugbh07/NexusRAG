@@ -1,0 +1,49 @@
+```mermaid
+flowchart TD
+    subgraph Users ["External Client Traffic"]
+        ClientBrowser["🌐 Web Browser / HTTPS Client"]
+    end
+
+    subgraph GoogleCloud ["Google Cloud Platform (Region: asia-south1)"]
+        subgraph Networking ["Managed Ingress & TLS"]
+            CloudEndpoints["🔒 Google Cloud Front-Door / TLS Termination (HTTPS)"]
+        end
+
+        subgraph Compute ["Serverless Container Compute (Knative)"]
+            CloudRun["⚡ Google Cloud Run Service: nexusrag\n• 1 vCPU, 1GB RAM\n• Autoscaling: 0 to 3 instances\n• Max Concurrency: 40 requests/instance"]
+            Container["🐳 OCI Docker Container\n• Python 3.11-slim\n• Streamlit Frontend & API\n• FAISS C++ IndexFlatIP\n• SentenceTransformer Cached Weights"]
+        end
+
+        subgraph ContainerRegistry ["Artifact Management"]
+            ArtifactReg[("📦 Google Artifact Registry\nasia-south1-docker.pkg.dev/PROJECT/nexusrag-repo")]
+            CloudBuild["🔨 Google Cloud Build Pipeline\n(Docker Automated Build & Push)"]
+        end
+
+        subgraph ObjectStorage ["Cloud Storage Layer"]
+            GCS[("🪣 Google Cloud Storage (GCS)\ngs://nexusrag-documents\n(PDF Object Persistence)")]
+        end
+
+        subgraph Telemetry ["Observability & Logging"]
+            CloudLogging["📝 Google Cloud Logging\n(Structured stdout/stderr logs)"]
+            CloudMonitoring["📈 Google Cloud Monitoring\n(CPU, Memory, Request Latency, 2xx/5xx)"]
+        end
+    end
+
+    subgraph ExternalSaaS ["Google Frontier AI"]
+        GeminiAPI["✨ Google Gemini API\n(gemini-2.5-flash / gemini-1.5-flash)"]
+    end
+
+    ClientBrowser -->|HTTPS :443| CloudEndpoints
+    CloudEndpoints --> CloudRun
+    CloudRun --> Container
+
+    CloudBuild -->|Push Built Image| ArtifactReg
+    ArtifactReg -->|Pull Image at Deployment| CloudRun
+
+    Container -->|Persist / Fetch Document Files| GCS
+    Container -->|Structured Application Logs| CloudLogging
+    CloudRun -->|Resource Metrics| CloudMonitoring
+
+    Container -->|HTTPS REST Call (Context + Prompt)| GeminiAPI
+    GeminiAPI -->|Grounded Natural Language Answer| Container
+```

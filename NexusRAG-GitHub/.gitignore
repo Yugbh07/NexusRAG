@@ -1,0 +1,34 @@
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environments & secrets
+.env
+.env.local
+*.key
+*.pem
+credentials.json
+service_account.json
+
+# Streamlit runtime
+.streamlit/
+
+# Local data & logs
+logs/
+data/index/
+data/storage/
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

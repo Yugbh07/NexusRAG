@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  nexusrag:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nexusrag:latest
+    container_name: nexusrag-app
+    ports:
+      - "8501:8501"
+    environment:
+      - PORT=8501
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-flash}
+      - STORAGE_BACKEND=${STORAGE_BACKEND:-local}
+      - CHUNK_SIZE=600
+      - CHUNK_OVERLAP=120
+      - DEFAULT_TOP_K=3
+      - ESCALATED_TOP_K=6
+    volumes:
+      - ./data/storage:/app/data/storage
+      - ./data/index:/app/data/index
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

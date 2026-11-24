@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nexusrag-service
+  namespace: default
+  labels:
+    app: nexusrag
+spec:
+  type: LoadBalancer  # Provisions cloud load balancer in GKE, or NodePort in Minikube/kind
+  selector:
+    app: nexusrag
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8501
+    name: http

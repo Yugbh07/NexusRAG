@@ -1,0 +1,42 @@
+```mermaid
+flowchart TD
+    %% NOTE: This diagram represents the PROPOSED FUTURE MICROSERVICES ARCHITECTURE
+    %% The current production deployment uses a Modular Monolith on Google Cloud Run.
+
+    subgraph Client ["Client Interface"]
+        WebClient["🌐 Next.js / React Modern Frontend SPA"]
+    end
+
+    subgraph APIGateway ["API Management Layer"]
+        Gateway["🛡️ Cloud API Gateway / Kong Ingress\n(Authentication, Rate Limiting, CORS)"]
+    end
+
+    subgraph Microservices ["Target Distributed Microservices"]
+        DocService["📦 Document Ingestion Service\n(PDF Parsing, OCR, Tika, Chunking)"]
+        EmbedService["🧠 Embedding Generation Microservice\n(FastAPI + Triton Inference Server / GPU)"]
+        VectorDB[("⚡ Distributed Vector Database\n(Qdrant / Milvus / Pinecone Cluster)")]
+        RAGRouter["🎯 Adaptive RAG Query Router\n(Escalation Logic, Query Decomposition)"]
+        LLMOrchestrator["✨ LLM Generation & Guardrail Service\n(Gemini 2.5, LangGraph, Hallucination Checks)"]
+    end
+
+    subgraph StorageMessageBus ["Data & Event Infrastructure"]
+        Kafka["📨 Event Bus / Cloud Pub/Sub\n(Async Document Processing Queue)"]
+        CloudStorage[("🪣 Cloud Object Storage (GCS Bucket)")]
+        MetadataDB[("🗄️ PostgreSQL / Cloud SQL\n(User, Workspace & Chunk Metadata)")]
+    end
+
+    WebClient -->|REST / WebSocket| Gateway
+    Gateway -->|Ingest Request| DocService
+    Gateway -->|User Query| RAGRouter
+
+    DocService -->|Store PDF| CloudStorage
+    DocService -->|Publish 'doc_uploaded'| Kafka
+    Kafka -->|Async Consume| EmbedService
+    EmbedService -->|Store Vectors| VectorDB
+    DocService -->|Save Metadata| MetadataDB
+
+    RAGRouter -->|Vector Search| VectorDB
+    RAGRouter -->|Context & Prompt| LLMOrchestrator
+    LLMOrchestrator -->|Grounded Response| RAGRouter
+    RAGRouter -->|Final Response + Citations| Gateway
+```

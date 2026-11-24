@@ -1,0 +1,54 @@
+```mermaid
+flowchart TD
+    subgraph Client ["Client Layer"]
+        User(["👤 User / Client Browser"])
+    end
+
+    subgraph UI ["Application Interface Layer (Streamlit)"]
+        StreamlitApp["🖥️ Streamlit Frontend Dashboard"]
+        DocManager["📂 Document Manager & Uploader"]
+        ChatInterface["💬 Conversational Chat Interface"]
+        DiagDashboard["📊 Real-time Performance Metrics"]
+    end
+
+    subgraph Ingestion ["Document Ingestion Pipeline"]
+        PDFExtract["📄 PDF Extractor (pypdf)"]
+        Chunker["✂️ Semantic Text Chunker (600 chars, 120 overlap)"]
+        StorageMgr["💾 Storage Manager (Local / GCS)"]
+    end
+
+    subgraph VectorEngine ["Vector Embedding & Retrieval Engine"]
+        STModel["🧠 SentenceTransformer (all-MiniLM-L6-v2)"]
+        FAISSStore[("⚡ FAISS Vector Index (IndexFlatIP Cosine)")]
+        AdaptiveEngine["🎯 Adaptive Retriever Heuristic Engine\n• Top-K=3 Initial\n• Confidence Threshold = 0.52\n• Escalated Top-K=6\n• Out-of-Domain Guardrail < 0.28"]
+    end
+
+    subgraph Generation ["Context Synthesis & LLM Layer"]
+        PromptAssembler["📑 Prompt Assembler & Evidence Grounding"]
+        GeminiClient["☁️ Google Gemini API Client\n(gemini-2.5-flash / gemini-1.5-flash)"]
+        OfflineSynth["🛡️ Offline Grounded Synthesizer (Fallback)"]
+    end
+
+    User -->|1. Uploads PDF| StreamlitApp
+    StreamlitApp --> DocManager
+    DocManager -->|Save raw PDF| StorageMgr
+    DocManager -->|Extract pages| PDFExtract
+    PDFExtract -->|Raw text & pages| Chunker
+    Chunker -->|Text chunks + metadata| STModel
+    STModel -->|384d Normalized Vectors| FAISSStore
+
+    User -->|2. Submits natural language query| ChatInterface
+    ChatInterface --> AdaptiveEngine
+    AdaptiveEngine -->|Query text| STModel
+    STModel -->|Query vector| AdaptiveEngine
+    AdaptiveEngine -->|Cosine similarity search| FAISSStore
+    FAISSStore -->|Top-K candidate chunks| AdaptiveEngine
+    
+    AdaptiveEngine -->|Evidence & Confidence| PromptAssembler
+    PromptAssembler -->|Context + Prompt + Guardrails| GeminiClient
+    GeminiClient -.->|If API unavailable| OfflineSynth
+    GeminiClient -->|Synthesized Grounded Answer| ChatInterface
+    OfflineSynth -->|Synthesized Evidence| ChatInterface
+    ChatInterface -->|Display answer + source citations + latency| User
+    ChatInterface -->|Update latency & escalation metrics| DiagDashboard
+```

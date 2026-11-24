@@ -1,0 +1,72 @@
+[
+  {
+    "id": "q1",
+    "question": "What is Google Cloud Run and what underlying technology is it built on?",
+    "target_page": 2,
+    "expected_keywords": ["Google Cloud Run", "Knative", "containers", "serverless"],
+    "type": "direct_factual"
+  },
+  {
+    "id": "q2",
+    "question": "Explain the differences between IaaS, PaaS, and SaaS cloud service models.",
+    "target_page": 1,
+    "expected_keywords": ["IaaS", "PaaS", "SaaS", "Infrastructure", "Platform", "Software"],
+    "type": "direct_factual"
+  },
+  {
+    "id": "q3",
+    "question": "What are the key cloud characteristics according to cloud computing principles?",
+    "target_page": 1,
+    "expected_keywords": ["On-Demand Self-Service", "Broad Network Access", "Resource Pooling", "Rapid Elasticity", "Measured Service"],
+    "type": "direct_factual"
+  },
+  {
+    "id": "q4",
+    "question": "What FAISS index type is used in NexusRAG and how does it calculate cosine similarity?",
+    "target_page": 3,
+    "expected_keywords": ["FAISS", "IndexFlatIP", "cosine similarity", "inner product", "normalized"],
+    "type": "direct_factual"
+  },
+  {
+    "id": "q5",
+    "question": "How does serverless autoscaling and scale-to-zero work in containerized cloud runtimes?",
+    "target_page": 2,
+    "expected_keywords": ["scale-to-zero", "autoscaling", "instances", "traffic", "cost"],
+    "type": "ambiguous_broad"
+  },
+  {
+    "id": "q6",
+    "question": "What mathematical relationship exists between normalized vector inner product and cosine similarity?",
+    "target_page": 3,
+    "expected_keywords": ["dot product", "cosine", "normalized", "Similarity", "vectors"],
+    "type": "ambiguous_broad"
+  },
+  {
+    "id": "q7",
+    "question": "How does containerization differ from traditional virtual machines regarding the host kernel and memory overhead?",
+    "target_page": 2,
+    "expected_keywords": ["containers", "virtual machines", "kernel", "cgroups", "overhead"],
+    "type": "ambiguous_broad"
+  },
+  {
+    "id": "q8",
+    "question": "What four steps constitute the adaptive retrieval mechanism algorithm in NexusRAG?",
+    "target_page": 3,
+    "expected_keywords": ["Adaptive Retrieval", "K=3", "K=6", "Confidence", "INSUFFICIENT_EVIDENCE"],
+    "type": "ambiguous_broad"
+  },
+  {
+    "id": "q9",
+    "question": "How does cryogenic quantum entanglement qubit superposition function in ion-trap computers?",
+    "target_page": null,
+    "expected_keywords": [],
+    "type": "out_of_domain"
+  },
+  {
+    "id": "q10",
+    "question": "What are the historic culinary traditions and landmark bakeries of 18th century Paris?",
+    "target_page": null,
+    "expected_keywords": [],
+    "type": "out_of_domain"
+  }
+]

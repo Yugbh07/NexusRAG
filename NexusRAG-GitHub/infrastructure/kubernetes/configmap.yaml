@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nexusrag-config
+  namespace: default
+data:
+  PORT: "8501"
+  APP_NAME: "NexusRAG"
+  STORAGE_BACKEND: "local"
+  GEMINI_MODEL: "gemini-2.5-flash"
+  CHUNK_SIZE: "600"
+  CHUNK_OVERLAP: "120"
+  DEFAULT_TOP_K: "3"
+  ESCALATED_TOP_K: "6"
+  SIMILARITY_THRESHOLD_CONFIDENT: "0.52"
+  SIMILARITY_THRESHOLD_MINIMUM: "0.28"

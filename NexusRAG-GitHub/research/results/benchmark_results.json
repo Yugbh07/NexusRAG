@@ -1,0 +1,267 @@
+{
+  "summary": {
+    "dataset_size": 10,
+    "in_domain_queries": 8,
+    "out_of_domain_queries": 2,
+    "config_a_basic_rag": {
+      "mrr": 1.0,
+      "recall": 1.0,
+      "avg_latency_ms": 0.08,
+      "avg_chunks_retrieved": 3.0,
+      "hallucination_vulnerability_on_ood": "HIGH (blindly passes irrelevant context)"
+    },
+    "config_b_adaptive_rag": {
+      "mrr": 1.0,
+      "recall": 1.0,
+      "avg_latency_ms": 9.9,
+      "avg_chunks_retrieved": 3.9,
+      "escalation_count": 3,
+      "escalation_rate_pct": 30.0,
+      "ood_rejection_rate_pct": 100.0
+    }
+  },
+  "config_a": [
+    {
+      "id": "q1",
+      "type": "direct_factual",
+      "latency_ms": 0.15,
+      "chunks_count": 3,
+      "max_score": 0.7837,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q2",
+      "type": "direct_factual",
+      "latency_ms": 0.06,
+      "chunks_count": 3,
+      "max_score": 0.7891,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q3",
+      "type": "direct_factual",
+      "latency_ms": 0.06,
+      "chunks_count": 3,
+      "max_score": 0.7185,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q4",
+      "type": "direct_factual",
+      "latency_ms": 0.06,
+      "chunks_count": 3,
+      "max_score": 0.6244,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q5",
+      "type": "ambiguous_broad",
+      "latency_ms": 0.09,
+      "chunks_count": 3,
+      "max_score": 0.5593,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q6",
+      "type": "ambiguous_broad",
+      "latency_ms": 0.09,
+      "chunks_count": 3,
+      "max_score": 0.5158,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q7",
+      "type": "ambiguous_broad",
+      "latency_ms": 0.09,
+      "chunks_count": 3,
+      "max_score": 0.6372,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q8",
+      "type": "ambiguous_broad",
+      "latency_ms": 0.09,
+      "chunks_count": 3,
+      "max_score": 0.6442,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q9",
+      "type": "out_of_domain",
+      "latency_ms": 0.07,
+      "chunks_count": 3,
+      "max_score": 0.1685,
+      "reciprocal_rank": 0.0,
+      "hit": 0,
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q10",
+      "type": "out_of_domain",
+      "latency_ms": 0.06,
+      "chunks_count": 3,
+      "max_score": 0.0841,
+      "reciprocal_rank": 0.0,
+      "hit": 0,
+      "escalated": false,
+      "rejected_as_insufficient": false
+    }
+  ],
+  "config_b": [
+    {
+      "id": "q1",
+      "type": "direct_factual",
+      "latency_ms": 9.74,
+      "chunks_count": 3,
+      "max_score": 0.7837,
+      "confidence_score": 0.7612,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "status": "CONFIDENT",
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q2",
+      "type": "direct_factual",
+      "latency_ms": 8.79,
+      "chunks_count": 3,
+      "max_score": 0.7891,
+      "confidence_score": 0.7297,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "status": "CONFIDENT",
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q3",
+      "type": "direct_factual",
+      "latency_ms": 8.01,
+      "chunks_count": 3,
+      "max_score": 0.7185,
+      "confidence_score": 0.6837,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "status": "CONFIDENT",
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q4",
+      "type": "direct_factual",
+      "latency_ms": 9.45,
+      "chunks_count": 3,
+      "max_score": 0.6244,
+      "confidence_score": 0.5912,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "status": "CONFIDENT",
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q5",
+      "type": "ambiguous_broad",
+      "latency_ms": 12.3,
+      "chunks_count": 3,
+      "max_score": 0.5593,
+      "confidence_score": 0.5478,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "status": "CONFIDENT",
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q6",
+      "type": "ambiguous_broad",
+      "latency_ms": 11.12,
+      "chunks_count": 6,
+      "max_score": 0.5158,
+      "confidence_score": 0.4306,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "status": "ESCALATED_RECOVERED",
+      "escalated": true,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q7",
+      "type": "ambiguous_broad",
+      "latency_ms": 11.46,
+      "chunks_count": 3,
+      "max_score": 0.6372,
+      "confidence_score": 0.5997,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "status": "CONFIDENT",
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q8",
+      "type": "ambiguous_broad",
+      "latency_ms": 11.19,
+      "chunks_count": 3,
+      "max_score": 0.6442,
+      "confidence_score": 0.6156,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "status": "CONFIDENT",
+      "escalated": false,
+      "rejected_as_insufficient": false
+    },
+    {
+      "id": "q9",
+      "type": "out_of_domain",
+      "latency_ms": 8.41,
+      "chunks_count": 6,
+      "max_score": 0.1685,
+      "confidence_score": 0.1518,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "status": "INSUFFICIENT_EVIDENCE",
+      "escalated": true,
+      "rejected_as_insufficient": true
+    },
+    {
+      "id": "q10",
+      "type": "out_of_domain",
+      "latency_ms": 8.54,
+      "chunks_count": 6,
+      "max_score": 0.0841,
+      "confidence_score": 0.0712,
+      "reciprocal_rank": 1.0,
+      "hit": 1,
+      "status": "INSUFFICIENT_EVIDENCE",
+      "escalated": true,
+      "rejected_as_insufficient": true
+    }
+  ]
+}
